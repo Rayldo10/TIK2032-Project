@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Multi Halaman</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
+    <script src="visual.js"></script>
     <nav>
         <a href="#home" onclick="showPage('home')">Home</a>
         <a href="#gallery" onclick="showPage('gallery')">Gallery</a>
@@ -13,10 +16,12 @@
         <a href="#contact" onclick="showPage('contact')">Contact</a>
     </nav>
 
-    <div id="home" class="container">
-        <h1>Hi, i'm Roynaldo Mailangkay</h1>
-        <p>Ini adalah rekam jejak saya.</p>
+    <div id="home" class="container home-container">
+        <h1 class="fade-in">Hi, I'm Roynaldo Mailangkay 👋</h1>
+        <p class="fade-in delay-1">Selamat datang di portofolio dan rekam jejak saya!</p>
+        <button class="cta-button fade-in delay-2" onclick="showPage('gallery')">Lihat Gallery</button>
     </div>
+    
     
     <div id="gallery" class="container" style="display: none;">
         <h1>Gallery</h1>
@@ -24,10 +29,11 @@
             <img src="Galery/pin_amba_jmk48.jpg" alt="Foto 1">
             <img src="Galery/meme _Udah_Yapping_nYa__.jpg" alt="Foto 2">
             <img src="Galery/Satwa_Liar.jpg" alt="Foto 3">
-        </div>
+          </div>          
     </div>
     
     <div id="blog" class="container" style="display: none;">
+        <button id="backToTop" onclick="scrollToTop()">⬆ Kembali ke Atas</button>
         <h1>Blog</h1>
         <h2>Sejarah Perbudakan: Dari Peradaban Kuno hingga Penghapusan di Era Modern</h2>
         <p>Artikel ini membahas bagaimana sistem perbudakan berkembang sejak zaman Mesir Kuno, Romawi,
@@ -104,13 +110,61 @@
         <h1>Contact</h1>
         <p>Email: aldomailangkay8@gmail.com</p>
         <p>Telepon: 08123456789</p>
+        <form id="contactForm">
+    <input type="text" placeholder="Nama" required>
+    <input type="email" placeholder="Email" required>
+    <textarea placeholder="Pesan" required></textarea>
+    <button type="submit">Kirim</button>
+</form>
     </div>
     
     <script>
         function showPage(pageId) {
             document.querySelectorAll('.container').forEach(page => page.style.display = 'none');
             document.getElementById(pageId).style.display = 'block';
+            document.querySelectorAll('.gallery img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').style.display = 'flex';
+    });
+  });
+
+  function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+  }
+
+  // Filter gallery
+  function filterGallery(category) {
+    const items = document.querySelectorAll('.gallery-item');
+    items.forEach(item => {
+      if (category === 'all' || item.classList.contains(category)) {
+        item.style.display = 'inline-block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
         }
     </script>
+    <script src="visual.js"></script>
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="" alt="Preview">
+      </div>
+      <script>
+        // Munculkan tombol back to top saat scroll ke bawah
+        window.onscroll = function () {
+          const btn = document.getElementById("backToTop");
+          if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            btn.style.display = "block";
+          } else {
+            btn.style.display = "none";
+          }
+        }
+      
+        function scrollToTop() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      </script>
 </body>
 </html>
